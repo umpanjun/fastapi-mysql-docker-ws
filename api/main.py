@@ -16,7 +16,7 @@ app.add_middleware(
 )
 from fastapi import Response
 
-@app.post("/products", response_model=ProductModel, status_code=201)  # ✅ เพิ่ม status_code=201
+@app.post("/products", response_model=ProductModel, status_code=201)  # ✅ เพิ่ม status_code=201 เพื่อให้อีนังฟลัตเตอรับข้อมูลกลับไปในแบบของมันเอาแต่ใจสัส
 async def create_new_product(product: ProductModel):
     try:
         product_id = create_product(product)
