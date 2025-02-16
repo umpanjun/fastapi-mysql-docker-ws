@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Phone Selling now!</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        h1 {
+            margin-top: 30px;
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1><i class="fas fa-star"></i> Product MobilePhone <i class="fas fa-star"></i></h1>
+
+    <div class="container">
+        <div class="row" id="product-list"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        async function fetchProducts() {
+            const response = await fetch('http://localhost:8001/products'); // เรียก API
+            const products = await response.json();
+            const list = document.getElementById('product-list');
+
+            list.innerHTML = ""; // เคลียร์ข้อมูลเก่า
+
+            products.forEach(product => {
+                const col = document.createElement('div');
+                col.className = "col-md-4 my-3";
+
+                col.innerHTML = `
+                    <div class="product-card p-3">
+                        <img src="${product.image}" alt="${product.name}" class="product-img">
+
+                        <h3 class="mt-3">${product.name}</h3>
+                        <p>Price: <strong>$${product.price}</strong></p>
+                        <button class="btn btn-outline-light">Buy Now</button>
+                    </div>
+                `;
+                list.appendChild(col);
+            });
+        }
+
+        fetchProducts();
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
